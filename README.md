@@ -69,3 +69,4 @@ Options:
 
 - `strict` - If `true` throwing an error if at least one element is not matched.
 - `separator` - Separator for incoming value string. Default is `,`.
+
