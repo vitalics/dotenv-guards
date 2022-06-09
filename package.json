@@ -1,0 +1,43 @@
+{
+  "name": "dotenv-guards",
+  "version": "1.0.0",
+  "private": false,
+  "description": "guards functions for dotenv package",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "pnpm jest",
+    "build": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=14",
+    "pnpm": ">=6"
+  },
+  "homepage": "https://github.com/vitalics/dotenv-guards",
+  "keywords": [
+    "dotenv",
+    "dotenv-guards",
+    "utilities"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./": "./lib/index.js",
+    "/array": "./lib/array.js",
+    "/boolean": "./lib/boolean.js",
+    "/number": "./lib/number.js",
+    "/enum": "./lib/enum.js"
+  },
+  "author": "vitali Haradkou <vitalicset@yandex.ru>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "16.0.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "1.0.1",
+    "@types/jest": "28.1.1",
+    "@types/node": "17.0.41",
+    "jest": "28.1.1",
+    "ts-jest": "28.0.4",
+    "typescript": "4.7.3"
+  }
+}
