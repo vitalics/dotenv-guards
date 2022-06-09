@@ -20,6 +20,8 @@ jobs:
         uses: pnpm/action-setup@v2.2.2
         with:
           version: 7.1.7
+          run_install: |
+            - args: []
       - run: pnpm jest
 
   bump-version:
