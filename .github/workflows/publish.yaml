@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "*"
 
 jobs:
   npm_release:
@@ -35,3 +37,7 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.npm_token }}
+      - uses: ncipollo/release-action@v1
+        name: "Release to github"
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
