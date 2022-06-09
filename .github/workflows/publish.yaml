@@ -43,15 +43,13 @@ jobs:
 
             {commits}
 
-            {range}
+            Full changelog: {range}
 
             finds me on npm: https://www.npmjs.com/package/dotenv-guards
 
-            ``` bash
-            npm install dotenv-guards@{title}
-            ```
+            `npm install dotenv-guards@{title}`
 
-            ❤ from Vitali Haradkou
+            made with ❤ from Vitali Haradkou
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.npm_token }}
