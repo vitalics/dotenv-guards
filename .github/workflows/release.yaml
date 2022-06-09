@@ -28,8 +28,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.1.7
       - name: Bump version
-        run: npm version patch
+        run: pnpm version patch
 
   publish-npm:
     needs: [build, bump-version]
@@ -40,6 +44,10 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: npm publish
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.1.7
+      - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
