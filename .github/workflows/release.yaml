@@ -1,3 +1,5 @@
+name: create github release
+
 on:
   push:
     tags:
