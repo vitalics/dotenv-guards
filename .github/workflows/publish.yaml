@@ -48,10 +48,9 @@ jobs:
             finds me on npm: https://www.npmjs.com/package/dotenv-guards
 
             ### Installation:
-            npm: npm install dotenv-guards@{title}
-            yarn: yarn add dotenv-guards@{title}
-            pnpm: pnpm add dotenv-guards@{title}
-
+            npm: `npm install dotenv-guards@latest`
+            yarn: `yarn add dotenv-guards@latest`
+            pnpm: `pnpm add dotenv-guards@latest`
 
             made with ❤ from Vitali Haradkou
       - uses: JS-DevTools/npm-publish@v1
