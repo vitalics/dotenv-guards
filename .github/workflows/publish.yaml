@@ -26,18 +26,18 @@ jobs:
           run_install: |
             - args: []
       - run: pnpm jest
-      - name: "Automated Version Bump"
-        uses: "phips28/gh-action-bump-version@master"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: fregante/release-with-changelog@v3
         with:
-          target-branch: "main"
-          default: patch
-          commit-message: "CI: bumps version to {{version}} [skip ci]"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-template: "- {title} ← {hash}"
+          template: |
+            ### Changelog
+
+            {commits}
+
+            {range}
+
+            ❤
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.npm_token }}
-      - uses: ncipollo/release-action@v1
-        name: "Release to github"
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
