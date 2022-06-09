@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    name: "PR test"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
