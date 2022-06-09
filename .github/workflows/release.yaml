@@ -31,8 +31,6 @@ jobs:
           target-branch: "main"
           default: patch
           commit-message: "CI: bumps version to {{version}} [skip ci]"
-      # - name: Bump version
-      #   run: pnpm version patch
-      # - run: pnpm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.npm_token }}
