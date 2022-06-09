@@ -23,8 +23,16 @@ jobs:
           run_install: |
             - args: []
       - run: pnpm jest
-      - name: Bump version
-        run: pnpm version patch
-      - run: pnpm publish
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target-branch: "main"
+          default: patch
+          commit-message: "CI: bumps version to {{version}} [skip ci]"
+      # - name: Bump version
+      #   run: pnpm version patch
+      # - run: pnpm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.npm_token}}
