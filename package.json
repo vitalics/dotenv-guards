@@ -1,6 +1,6 @@
 {
   "name": "dotenv-guards",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": false,
   "description": "guards functions for dotenv package",
   "main": "lib/index.js",
