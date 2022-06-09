@@ -1,12 +1,6 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-inputs:
-  version:
-    description: "Which type of release to create"
-    required: true
-    default: "patch"
-
 name: Node.js Package
 
 on:
@@ -35,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Bump version
-        run: pnpm version ${{ inputs.version }}
+        run: pnpm version patch
 
   publish-npm:
     needs: [build, bump-version]
