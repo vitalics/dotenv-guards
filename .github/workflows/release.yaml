@@ -1,0 +1,64 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: build and publish patch release to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: "version type, can be 'patch', 'minor', 'major'"
+        required: true
+        default: "patch"
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+
+jobs:
+  npm_release:
+    name: "Build and publish to npm"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.1.7
+          run_install: |
+            - args: []
+      - run: pnpm jest
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target-branch: "main"
+          default: "{{inputs.type}}"
+          commit-message: "CI: bumps version to {{version}} [skip ci]"
+      - uses: fregante/release-with-changelog@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-template: "- {title} ← {hash}"
+          template: |
+            ### Changelog
+
+            {commits}
+
+            Full changelog: {range}
+
+            finds me on npm: https://www.npmjs.com/package/dotenv-guards
+
+            ### Installation:
+            npm: `npm install dotenv-guards@latest`
+            yarn: `yarn add dotenv-guards@latest`
+            pnpm: `pnpm add dotenv-guards@latest`
+
+            made with ❤ from Vitali Haradkou
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.npm_token }}
