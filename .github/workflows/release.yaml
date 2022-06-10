@@ -7,6 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       type:
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
         description: "version type, can be 'patch', 'minor', 'major'"
         required: true
         default: "patch"
@@ -36,13 +41,13 @@ jobs:
           run_install: |
             - args: []
       - run: pnpm jest
-      - name: Automated Version ${{inputs.type}}
+      - name: Automated Version ${{ github.event.inputs.type }}
         uses: "phips28/gh-action-bump-version@master"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           target-branch: "main"
-          default: ${{ inputs.type }}
+          default: ${{ github.event.inputs.type }}
           commit-message: "CI: bumps version to {{version}}"
       - uses: fregante/release-with-changelog@v3
         with:
