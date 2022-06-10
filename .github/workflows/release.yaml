@@ -6,7 +6,7 @@ name: build and publish release to npm
 on:
   workflow_dispatch:
     inputs:
-      type:
+      release_type:
         type: choice
         options:
           - patch
@@ -41,13 +41,13 @@ jobs:
           run_install: |
             - args: []
       - run: pnpm jest
-      - name: Automated Version ${{ github.event.inputs.type }}
+      - name: Automated Version "${{ github.event.inputs.release_type }}"
         uses: "phips28/gh-action-bump-version@master"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           target-branch: "main"
-          default: ${{ github.event.inputs.type }}
+          default: "${{ github.event.inputs.release_type }}"
           commit-message: "CI: bumps version to {{version}}"
       - uses: fregante/release-with-changelog@v3
         with:
