@@ -14,7 +14,7 @@ on:
           - major
         description: "version type, can be 'patch', 'minor', 'major'"
         required: true
-        default: "patch"
+        default: patch
   push:
     branches:
       - main
@@ -41,13 +41,13 @@ jobs:
           run_install: |
             - args: []
       - run: pnpm jest
-      - name: Automated Version "${{ github.event.inputs.release_type }}"
+      - name: Automated Version ${{ github.event.inputs.release_type || 'patch' }}
         uses: "phips28/gh-action-bump-version@master"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           target-branch: "main"
-          default: "${{ github.event.inputs.release_type }}"
+          default: ${{ github.event.inputs.release_type || 'patch' }}
           commit-message: "CI: bumps version to {{version}}"
       - uses: fregante/release-with-changelog@v3
         with:

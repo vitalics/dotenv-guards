@@ -1,5 +1,7 @@
 # dotenv guards
 
+![example workflow](https://github.com/vitalics/dotenv-guards/actions/workflows/release/badge.svg)
+
 guards functions for dotenv package
 
 ## installation
