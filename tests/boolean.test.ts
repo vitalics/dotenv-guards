@@ -16,3 +16,8 @@ test('should returns boolean value with providing fallback value', () => {
 test('should throw an error if "throwOnUndefined: true"', () => {
   expect(() => booleanGuard(undefined, true, { throwOnUndefined: true })).toThrowError(TypeError);
 });
+
+test('should throw an error if incoming variable is not a string or undefined', () => {
+  // @ts-expect-error
+  expect(() => booleanGuard(null)).toThrowError(TypeError);
+});

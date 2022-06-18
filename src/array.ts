@@ -1,3 +1,4 @@
+import { assertString } from './assert';
 import enumGuard from './enum';
 
 type Options = {
@@ -33,6 +34,7 @@ type Options = {
  * arrayGuard('1,2,3', ['1', '2', '3'], {separator: ','}); // [1,2,3]
  */
 export default function arrayGuard<S extends string, O extends Options = Options>(variable: string | undefined, values: readonly S[] | S[], options?: O): O['strict'] extends true ? S[] : (S | null)[] {
+  assertString(variable);
   const separator = options?.separator || ',';
 
   const result = variable?.split(separator) || [];

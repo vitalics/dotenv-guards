@@ -1,3 +1,5 @@
+import { assertString } from './assert';
+
 /**
  * Guard that parse environment variable and returns a first including of provided `values`.
  * 
@@ -16,6 +18,7 @@
  * enumGuard('5', ['1', '2'], null); // null, fallback value is null
  */
 export default function enumGuard<S extends string>(variable: string | undefined, values: readonly string[], fallbackValue?: string | null): S | null {
+  assertString(variable);
   const result = values.find(v => v === variable);
   if (!result && !fallbackValue && fallbackValue !== null) {
     throw new Error(`Unable process ${variable} from list: ${values}`);

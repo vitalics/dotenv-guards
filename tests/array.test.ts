@@ -33,3 +33,8 @@ test('should parse string in strict mode and throws an error', () => {
   const actual = () => arrayGuard('zxc', ['NaN', 'qwe'], { strict: true });
   expect(actual).toThrowError(Error);
 });
+
+test('should throw an error if incoming variable is not a string or undefined', () => {
+  // @ts-expect-error
+  expect(() => arrayGuard(null)).toThrowError(TypeError);
+});
