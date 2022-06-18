@@ -41,6 +41,7 @@ jobs:
           run_install: |
             - args: []
       - run: pnpm jest
+      - run: pnpm build
       - name: Automated Version ${{ github.event.inputs.release_type || 'patch' }}
         uses: "phips28/gh-action-bump-version@master"
         env:
