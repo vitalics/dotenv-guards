@@ -1,5 +1,7 @@
 # dotenv guards
 
+![dotenv-guards]('images/dotenv-guards.png')
+
 ![release status](https://github.com/vitalics/dotenv-guards/actions/workflows/release.yaml/badge.svg)
 
 ![tests status](https://github.com/vitalics/dotenv-guards/actions/workflows/pr.yaml/badge.svg)
