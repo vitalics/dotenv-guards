@@ -28,3 +28,4 @@ jobs:
           run_install: |
             - args: []
       - run: pnpm jest
+      - run: pnpm build
