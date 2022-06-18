@@ -1,3 +1,5 @@
+import { assertString } from './assert';
+
 type Options = {
   /**
    * Array of possible values which will be converted as `true`.
@@ -35,6 +37,7 @@ type Options = {
  * booleanGuard('yes', false, {trueSymbols: ['yes']}); //true
  */
 export default function booleanGuard(variable: string | undefined, fallbackValue = false, options?: Options) {
+  assertString(variable);
   const defaultTrueSymbols = ['1', 'true'] as const;
   if (variable === undefined) {
     if (options?.throwOnUndefined) {

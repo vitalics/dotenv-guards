@@ -1,3 +1,5 @@
+import { assertString } from './assert';
+
 type Options = {
   /**
    * Throw an error if incoming value is not safe integer
@@ -42,6 +44,7 @@ type Options = {
  * @return {*} 
  */
 export default function numberGuard(variable: string | undefined, fallbackValue = 0, options?: Options) {
+  assertString(variable);
   if (variable === undefined) {
     if (options?.throwOnUndefined) {
       throw new TypeError('numberGuard. variable is undefined');

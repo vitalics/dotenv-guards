@@ -58,3 +58,8 @@ test('should throws "TypeError" if "throwOnSafeInteger:true" for Infinity-like s
 test('should throws "TypeError" if "throwOnSafeInteger:true" for Number.MAX_SAFE_INTEGER+10 string', () => {
   expect(() => numberGuard(String(Number.MAX_SAFE_INTEGER) + '10', 5, { throwOnSafeInteger: true })).toThrowError(RangeError);
 });
+
+test('should throw an error if incoming variable is not a string or undefined', () => {
+  // @ts-expect-error
+  expect(() => numberGuard(null)).toThrowError(TypeError);
+});

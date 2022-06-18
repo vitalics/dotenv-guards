@@ -13,3 +13,8 @@ test('should throw an error when fallback value is not provided', () => {
   const actual = () => enumGuard('zxc', ['NaN', 'qwe']);
   expect(actual).toThrowError(Error);
 });
+
+test('should throw an error if incoming variable is not a string or undefined', () => {
+  // @ts-expect-error
+  expect(() => enumGuard(null)).toThrowError(TypeError);
+});
