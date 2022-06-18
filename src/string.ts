@@ -56,8 +56,8 @@ export default function stringGuard(variable: string | undefined, options?: Opti
   if ((variable === undefined || variable === null || variable === 'null' || variable === 'undefined' || variable === '') && options?.throwOnNullable) {
     throw new TypeError('stringGuard. variable is "null" or "undefined"');
   }
-  if (options?.matcher && typeof options.matcher === 'function') {
-    const isMatched = options.matcher(fallbackValue);
+  if (variable && options?.matcher && typeof options.matcher === 'function') {
+    const isMatched = options.matcher(variable);
     if (!isMatched && options.throwOnMismatch) {
       throw new TypeError('stringGuard. variable is not matched');
     }
