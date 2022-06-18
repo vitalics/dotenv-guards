@@ -61,7 +61,7 @@ export default function stringGuard(variable: string | undefined, options?: Opti
     if (!isMatched && options.throwOnMismatch) {
       throw new TypeError('stringGuard. variable is not matched');
     }
-    return fallbackValue;
+    return variable;
   }
 
   if (options?.regexp) {
