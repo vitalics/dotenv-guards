@@ -36,6 +36,33 @@ test('should return regexp match if input variable is matched by regexp', () => 
   expect(actual).toBe('qwe');
 });
 
+test('should return value if input variable is matched by matcher function', () => {
+  const actual = stringGuard('qweasd', {
+    matcher(value) {
+      return value.includes('qwe')
+    },
+  });
+  expect(actual).toBe('qweasd');
+});
+
+test('should return input value if input variable is not matched by matcher function', () => {
+  const actual = stringGuard('qweasd', {
+    matcher(value) {
+      return value.includes('asdf')
+    },
+  });
+  expect(actual).toBe('qweasd');
+});
+
+test('should throw an error if input variable is not matched by matcher function and throwOnMismatch=true', () => {
+  expect(() => stringGuard('qweasd', {
+    matcher(value) {
+      return value.includes('asdf')
+    },
+    throwOnMismatch: true,
+  })).toThrowError(TypeError);
+});
+
 test('should throw an error if incoming variable is not a string or undefined', () => {
   // @ts-expect-error
   expect(() => stringGuard(null)).toThrowError(TypeError);
