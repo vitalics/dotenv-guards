@@ -1,7 +1,7 @@
 import { assertString } from './assert';
 import enumGuard from './enum';
 
-type Options = {
+export type Options = {
   /**
    * If `true` throwing an error if at least one element is not matched
    *

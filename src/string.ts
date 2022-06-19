@@ -1,6 +1,6 @@
 import { assertString } from './assert';
 
-type Options = {
+export type Options = {
   /**
    * Fallback value. Will used if parsing was not successful
    *
@@ -68,8 +68,9 @@ export default function stringGuard(variable: string | undefined, options?: Opti
     const match = variable?.match(options.regexp);
     if (match) {
       return match[0];
+    } else if (!match && options?.throwOnMismatch) {
+      throw new TypeError('stringGuard. variable is not matched');
     }
   }
   return fallbackValue;
 }
-
