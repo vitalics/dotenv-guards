@@ -26,10 +26,10 @@
   "exports": {
     "./package.json": "./package.json",
     "./": "./lib/index.js",
-    "/array": "./lib/array.js",
-    "/boolean": "./lib/boolean.js",
-    "/number": "./lib/number.js",
-    "/enum": "./lib/enum.js"
+    "./array": "./lib/array.js",
+    "./boolean": "./lib/boolean.js",
+    "./number": "./lib/number.js",
+    "./enum": "./lib/enum.js"
   },
   "author": "vitali Haradkou <vitalicset@yandex.ru>",
   "license": "MIT",
