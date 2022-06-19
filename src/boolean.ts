@@ -1,21 +1,19 @@
 import { assertString } from './assert';
 
-type DefaultTrueSymbols = ['true', '1']
-export type Parse<
-  S extends string,
-  Fallback = false,
-  TrueSymbols extends string[] | readonly string[] = DefaultTrueSymbols
-  > =
-  TrueSymbols extends readonly string[] ? S extends TrueSymbols[number] ? true : S extends DefaultTrueSymbols[number] ? true : Fallback extends undefined ? false : Fallback : false;
-
-export type Options<TrueSymbols extends readonly string[] | string[] = DefaultTrueSymbols> = {
+export type Options = {
+  /**
+   * Fallback value if parsing was wrong
+   *
+   * @type {boolean}
+   */
+  fallback?: boolean;
   /**
    * Array of possible values which will be converted as `true`.
    * 
    * @default
    * ['1', 'true']
    */
-  trueSymbols?: TrueSymbols;
+  trueSymbols?: readonly string[] | string[];
   /**
    * Throw an error if incoming value is undefined, fallback value is not returned, since it returns an error
    * @default
@@ -36,7 +34,7 @@ export type Options<TrueSymbols extends readonly string[] | string[] = DefaultTr
  *
  * @export
  * @param {(string | undefined)} variable
- * @param {boolean} [fallbackValue=false]
+ * @param {Options} options Parsing options.
  * @return {*} parsed value or `TypeError`
  * @example
  * booleanGuard('1'); //true
@@ -44,31 +42,23 @@ export type Options<TrueSymbols extends readonly string[] | string[] = DefaultTr
  * booleanGuard('long string', true); //true
  * booleanGuard('yes', false, {trueSymbols: ['yes']}); //true
  */
-export default function booleanGuard<
-  S extends string,
-  Fallback extends boolean = false,
-  TrueSymbols extends readonly string[] | string[] = DefaultTrueSymbols,
-  >
-  (
-    variable: S | undefined,
-    fallback: Fallback = false as Fallback,
-    options?: Options<TrueSymbols>
-  ): Parse<S, Fallback, TrueSymbols> {
+export default function booleanGuard(variable: string | undefined, options?: Options): boolean {
   assertString(variable);
   const defaultTrueSymbols = ['1', 'true'] as const;
+  const fallback = options?.fallback ?? false;
   if (variable === undefined) {
     if (options?.throwOnUndefined) {
       throw new TypeError('booleanGuard. variable is undefined');
     }
-    return fallback as Parse<S, Fallback, TrueSymbols>;
+    return fallback;
   }
   // merge default options with provided options
   const trueSymbols = [...new Set(options?.trueSymbols ? [...defaultTrueSymbols, ...options.trueSymbols] : defaultTrueSymbols)];
   const isTrueMatched = trueSymbols.some(symbol => symbol === variable);
   if (isTrueMatched) {
-    return true as Parse<S, Fallback, TrueSymbols>;
-  } else if (options?.throwOnFail) {
+    return true;
+  } else if (!isTrueMatched && options?.throwOnFail) {
     throw new TypeError(`booleanGuard. variable is not matched with ${trueSymbols}`);
   }
-  return fallback as Parse<S, Fallback, TrueSymbols>;
+  return fallback;
 }

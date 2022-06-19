@@ -11,11 +11,10 @@ export type Options = {
   /**
    * Parsing separator
    *
-   * @type {(',' | ';' | '|')}
    * @default
    * ','
    */
-  separator?: ',' | ';' | '|';
+  separator?: string;
 };
 /**
  * Guard that parse environment variable and returns an array of parsed values.
@@ -28,8 +27,8 @@ export type Options = {
  * @template S
  * @param {(string | undefined)} variable environment variable
  * @param {readonly} values possible values
- * @param {ArrayGuardOptions} [options]
- * @return {*}  {((S | null)[])} parsed values or `null`
+ * @param {Options} [options]
+ * @return {*}  {((S | null)[])} parsed values, `null` or `Error`
  * @example
  * arrayGuard('1,2,3', ['1', '2', '3'], {separator: ','}); // [1,2,3]
  */
@@ -39,8 +38,8 @@ export default function arrayGuard<S extends string, O extends Options = Options
 
   const result = variable?.split(separator) || [];
   if (options && options.strict) {
-    return result.map(element => enumGuard(element, values) as S) as any;
+    return result.map(element => enumGuard(element, values) as S);
   } else {
-    return result.map(res => enumGuard(res, values, null) as S | null) as any;
+    return result.map(res => enumGuard(res, values, null) as S);
   }
 }

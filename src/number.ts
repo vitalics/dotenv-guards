@@ -2,6 +2,12 @@ import { assertString } from './assert';
 
 export type Options = {
   /**
+   * fallback value if parsing was wrong
+   *
+   * @type {number}
+   */
+  fallback?: number;
+  /**
    * Throw an error if incoming value is not safe integer
    *
    * @type {boolean}
@@ -43,8 +49,9 @@ export type Options = {
  * @param {Options} [options] parsing options
  * @return {*} 
  */
-export default function numberGuard(variable: string | undefined, fallback = 0, options?: Options) {
+export default function numberGuard(variable: string | undefined, options?: Options) {
   assertString(variable);
+  const fallback = options?.fallback ?? 0;
   if (variable === undefined) {
     if (options?.throwOnUndefined) {
       throw new TypeError('numberGuard. variable is undefined');
