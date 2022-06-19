@@ -1,6 +1,6 @@
 import { assertString } from './assert';
 
-type Options = {
+export type Options = {
   /**
    * Throw an error if incoming value is not safe integer
    *
