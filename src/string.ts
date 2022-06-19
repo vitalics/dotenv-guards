@@ -45,7 +45,7 @@ export type Options = {
  * @param {(string | undefined)} variable variable to parse
  * @param {number} [fallbackValue=0] fallback value if parsing was wrong
  * @param {Options} [options] parsing options
- * @return {*} 
+ * @return {*} Guarded value or `TypeError`
  */
 export default function stringGuard(variable: string | undefined, options?: Options) {
   assertString(variable);

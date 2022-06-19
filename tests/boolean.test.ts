@@ -5,16 +5,16 @@ test('should returns "false" value without providing fallback value for random s
   expect(actual).toBe(false);
 });
 test('should throw an error if "throwOnFail: true"', () => {
-  expect(() => booleanGuard('NaN', false, { throwOnFail: true, })).toThrowError(TypeError);
+  expect(() => booleanGuard('NaN', { fallback: false, throwOnFail: true, })).toThrowError(TypeError);
 });
 
 test('should returns boolean value with providing fallback value', () => {
-  const actual = booleanGuard('NaN', true);
+  const actual = booleanGuard('NaN', { fallback: true });
   expect(actual).toBe(true);
 });
 
 test('should throw an error if "throwOnUndefined: true"', () => {
-  expect(() => booleanGuard(undefined, true, { throwOnUndefined: true })).toThrowError(TypeError);
+  expect(() => booleanGuard(undefined, { fallback: true, throwOnUndefined: true })).toThrowError(TypeError);
 });
 
 test('should throw an error if incoming variable is not a string or undefined', () => {

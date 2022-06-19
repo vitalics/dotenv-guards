@@ -61,11 +61,12 @@ numberGuard(process.env.jobs, 0, {throwOnSafeInteger: true}); //throws an error
 ### boolean guard
 
 ```javascript
-boolean(value, fallbackValue, options)
+booleanGuard(value, options)
 ```
 
 Options:
 
+- `fallback` - fallback value if incoming value is not a boolean and cannot parse value to boolean.
 - `trueSymbols` - Array of possible values which will be converted as `true`.
 - `throwOnUndefined` Throw an error if incoming value is undefined, fallback value is not returned, since it returns an error.
 - `throwOnFail` - Throw an error if incoming value is not matching with `trueSymbols` option.
