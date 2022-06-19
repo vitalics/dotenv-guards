@@ -39,17 +39,17 @@ type Options = {
  *
  * @export
  * @param {(string | undefined)} variable variable to parse
- * @param {number} [fallbackValue=0] fallback value if parsing was wrong
+ * @param {number} [fallback=0] fallback value if parsing was wrong
  * @param {Options} [options] parsing options
  * @return {*} 
  */
-export default function numberGuard(variable: string | undefined, fallbackValue = 0, options?: Options) {
+export default function numberGuard(variable: string | undefined, fallback = 0, options?: Options) {
   assertString(variable);
   if (variable === undefined) {
     if (options?.throwOnUndefined) {
       throw new TypeError('numberGuard. variable is undefined');
     }
-    return fallbackValue;
+    return fallback;
   }
   const floatValue = Number.parseFloat(variable);
   const isSafe = Number.isSafeInteger(floatValue);
@@ -66,5 +66,5 @@ export default function numberGuard(variable: string | undefined, fallbackValue 
   if (isSafe && Number.isFinite(floatValue)) {
     return floatValue;
   }
-  return fallbackValue;
+  return fallback;
 }
