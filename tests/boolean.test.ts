@@ -5,7 +5,7 @@ test('should returns "false" value without providing fallback value for random s
   expect(actual).toBe(false);
 });
 test('should throw an error if "throwOnFail: true"', () => {
-  expect(() => booleanGuard('NaN', false, { throwOnFail: true })).toThrowError(TypeError);
+  expect(() => booleanGuard('NaN', false, { throwOnFail: true, })).toThrowError(TypeError);
 });
 
 test('should returns boolean value with providing fallback value', () => {
