@@ -38,8 +38,8 @@ export default function arrayGuard<S extends string, O extends Options = Options
 
   const result = variable?.split(separator) || [];
   if (options && options.strict) {
-    return result.map(element => enumGuard(element, values) as S);
+    return result.map(element => enumGuard(element, values));
   } else {
-    return result.map(res => enumGuard(res, values, null) as S);
+    return result.map(res => enumGuard(res, values, null));
   }
 }

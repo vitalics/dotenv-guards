@@ -30,8 +30,8 @@ test('should parse string in strict mode and returns array of 1 values', () => {
 });
 
 test('should parse string in strict mode and throws an error', () => {
-  const actual = () => arrayGuard('zxc', ['NaN', 'qwe'], { strict: true });
-  expect(actual).toThrowError(Error);
+  expect(() => arrayGuard('zxc', ['NaN', 'qwe'], { strict: true })).toThrowError(Error);
+  expect(() => arrayGuard('zxc', ['NaN', 'qwe'], { strict: true })).toThrowError(RangeError);
 });
 
 test('should throw an error if incoming variable is not a string or undefined', () => {
