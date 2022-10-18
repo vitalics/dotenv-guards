@@ -26,9 +26,14 @@
     "./package.json": "./package.json",
     ".": "./lib/index.js",
     "./array": "./lib/array.js",
+    "./assert": null,
     "./boolean": "./lib/boolean.js",
+    "./constants": null,
+    "./define": "./lib/define.js",
+    "./enum": "./lib/enum.js",
     "./number": "./lib/number.js",
-    "./enum": "./lib/enum.js"
+    "./revoke": "./lib/revoke.js",
+    "./string": "./lib/string.js"
   },
   "author": "vitali Haradkou <vitalicset@yandex.ru>",
   "license": "MIT",
