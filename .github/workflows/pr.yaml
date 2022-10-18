@@ -32,3 +32,5 @@ jobs:
       - run: pnpm jest --coverage
       - name: Report code coverage
         uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
