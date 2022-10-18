@@ -15,11 +15,6 @@ on:
         description: "version type, can be 'patch', 'minor', 'major'"
         required: true
         default: patch
-  push:
-    branches:
-      - main
-    tags:
-      - "*"
 
 jobs:
   npm_release:
