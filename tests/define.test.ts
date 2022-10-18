@@ -1,4 +1,4 @@
-import { isProxy } from 'util/types';
+import { types } from 'util';
 
 import define from '../src/define';
 
@@ -34,6 +34,6 @@ test('should returns proxy object', () => {
   const fn = define((val: string | undefined) => {
     return !!val;
   });
-  expect(isProxy(fn)).toBeTruthy();
+  expect(types.isProxy(fn)).toBeTruthy();
 });
 
