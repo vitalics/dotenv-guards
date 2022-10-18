@@ -1,4 +1,4 @@
-import { assertString } from './assert';
+import { assertFunction, assertString } from './assert';
 
 export type Options = {
   /**
@@ -48,15 +48,13 @@ export type Options = {
  * @return {*} Guarded value or `TypeError`
  */
 export default function stringGuard(variable: string | undefined, options?: Options) {
-  assertString(variable);
+  assertString(variable, { strict: options?.throwOnUndefined, error: new TypeError('stringGuard. variable is undefined') });
   const fallbackValue = options?.fallback ?? variable ?? '';
-  if (variable === undefined && options?.throwOnUndefined) {
-    throw new TypeError('stringGuard. variable is undefined');
-  }
   if ((variable === undefined || variable === null || variable === 'null' || variable === 'undefined' || variable === '') && options?.throwOnNullable) {
     throw new TypeError('stringGuard. variable is "null" or "undefined"');
   }
-  if (variable && options?.matcher && typeof options.matcher === 'function') {
+  if (variable && options?.matcher) {
+    assertFunction(options?.matcher);
     const isMatched = options.matcher(variable);
     if (!isMatched && options.throwOnMismatch) {
       throw new TypeError('stringGuard. variable is not matched');
@@ -68,7 +66,8 @@ export default function stringGuard(variable: string | undefined, options?: Opti
     const match = variable?.match(options.regexp);
     if (match) {
       return match[0];
-    } else if (!match && options?.throwOnMismatch) {
+    }
+    if (!match && options?.throwOnMismatch) {
       throw new TypeError('stringGuard. variable is not matched');
     }
   }
