@@ -21,3 +21,13 @@ test('should throw an error if incoming variable is not a string or undefined', 
   // @ts-expect-error
   expect(() => booleanGuard(null)).toThrowError(TypeError);
 });
+
+test('should returns fallback in case of incoming variable is undefined', () => {
+  const guarded = booleanGuard(undefined, { fallback: true });
+  expect(guarded).toBeTruthy();
+});
+
+test('should returns true in case of custom boolean trueSymbols', () => {
+  const guarded = booleanGuard('qwe', { trueSymbols: ['qwe'] });
+  expect(guarded).toBeTruthy();
+});

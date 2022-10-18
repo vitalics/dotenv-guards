@@ -50,12 +50,9 @@ export type Options = {
  * @return {*} 
  */
 export default function numberGuard(variable: string | undefined, options?: Options) {
-  assertString(variable);
+  assertString(variable, { strict: options?.throwOnUndefined, error: new TypeError('numberGuard. variable is undefined') });
   const fallback = options?.fallback ?? 0;
   if (variable === undefined) {
-    if (options?.throwOnUndefined) {
-      throw new TypeError('numberGuard. variable is undefined');
-    }
     return fallback;
   }
   const floatValue = Number.parseFloat(variable);

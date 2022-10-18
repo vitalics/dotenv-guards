@@ -30,20 +30,47 @@ const jobsAsNumber = numberGuard(process.env.jobs, 2); // return 2 if jobs is no
 - `arrayGuard` - parse a string to an array.
 - `string` - parse string and execute matchers.
 
+## Custom guards
+
+In case if you want to define custom guards - you can use `define` and `revoke` functions.
+
+Example:
+
+``` ts
+import { define, revoke } from 'dotenv-guards';
+
+// define new guard
+const jsonGuard = define((val: string | undefined) => {
+    return JSON.parse(val);
+});
+
+jsonGuard('{"qwe": true}'); // returns { qwe: true }
+
+revoke(jsonGuard); // remove json guard
+
+jsonGuard('{"qwe": true}'); // TypeError. jsonGuard is revoked
+```
+
 ## API
 
-### numberGuard
+### number guard
 
 ```javascript
 numberGuard(value, fallbackValue, options)
 ```
 
-Options:
+### Parameters
 
-- `throwOnFinite` - Throws an error if incoming value parsed to `Infinity`
-- `throwOnNaN` - Throws an error if incoming value parsed to `NaN`
-- `throwOnUndefined` - If `true` throwing an error if incoming value is undefined
-- `throwOnSafeInteger` - Throws an error if incoming value is not safe integer
+- `value` - [`string`] - string-like variable.
+- `options` - [`Object`]
+  - `throwOnFinite` - [`boolean`] - Throws an error if incoming value parsed to `Infinity`. Default is `false`.
+  - `throwOnNaN` - [`boolean`] - Throws an error if incoming value parsed to `NaN`. Default is `false`.
+  - `throwOnUndefined` - [`boolean`] - If `true` throwing an error if incoming value is undefined. Default is `false`.
+  - `throwOnSafeInteger` - [`boolean`] - Throws an error if incoming value is not safe integer. Default is `false`.
+
+#### Returns
+
+`string`
 
 Example:
 
@@ -64,12 +91,18 @@ numberGuard(process.env.jobs, 0, {throwOnSafeInteger: true}); //throws an error
 booleanGuard(value, options)
 ```
 
-Options:
+#### Parameters
 
-- `fallback` - fallback value if incoming value is not a boolean and cannot parse value to boolean.
-- `trueSymbols` - Array of possible values which will be converted as `true`.
-- `throwOnUndefined` Throw an error if incoming value is undefined, fallback value is not returned, since it returns an error.
-- `throwOnFail` - Throw an error if incoming value is not matching with `trueSymbols` option.
+- value - [`string`] - string-like variable.
+- `options` - [`Object`]
+  - `fallback` - fallback value if incoming value is not a boolean and cannot parse value to boolean.
+  - `trueSymbols` - [`string`] - Array of possible values which will be converted as `true`. Default is `['1', 'true']`
+  - `throwOnUndefined` Throw an error if incoming value is undefined, fallback value is not returned, since it returns an error. Default is `false`.
+  - `throwOnFail` - Throw an error if incoming value is not matching with `trueSymbols` option. Default is `false`.
+
+#### Returns
+
+`string`
 
 Example:
 
@@ -86,6 +119,16 @@ booleanGuard(process.env.acceptDownloading, false, {trueSymbols: ['yes']}); // r
 ```javascript
 enum(value, arrayOfPossibleValues, fallbackValue)
 ```
+
+### Parameters
+
+- `value` - [`string`] - string-like variable.
+- `arrayOfPossibleValues` - [`Array<string>`] - Array of possible values.
+- `fallbackValue` - [`string`] - fallback value.
+
+#### Returns
+
+`string`
 
 Example:
 
@@ -104,10 +147,17 @@ enumGuard(process.env.NODE_ENV, ['development', 'production', 'test'], 'developm
 array(value, arrayOfPossibleValues, options)
 ```
 
-Options:
+#### Parameters
 
-- `strict` - If `true` throwing an error if at least one element is not matched.
-- `separator` - Separator for incoming value string. Default is `,`.
+- `value` - [`string`] - string-like variable.
+- `arrayOfPossibleValues` - [`Array<string>`] - If `true` throwing an error if at least one element is not matched.
+- `options` - [`Object`]
+  - `strict` - [`boolean`] - If `true` throwing an error if at least one element is not matched. Default is `false`.
+  - `separator` - [`string`] - Parsing separator. Default is `,`
+
+#### Returns
+
+`string`
 
 Example:
 
@@ -126,14 +176,20 @@ arrayGuard(process.env.array, ['val1', 'val2', 'val3'], {separator: ';'}); // sp
 string(value, options)
 ```
 
-Options:
+#### Parameters
 
-- `fallback` - fallback value if incoming value is not matched by regex or matcher function.
-- `throwOnUndefined` - Throw an error if incoming value is undefined, fallback value is not returned, since it returns an error.
-- `regexp` - Regexp for incoming value. Returns first match.
-- `throwOnNullable` - Throw an error if incoming value is null, undefined, empty string or empty array.
-- `matcher` - Matcher function for incoming value. Returns boolean(is matched incoming string or not).
-- `throwOnMismatch` - Throw an error if incoming value is not matched by regex or matcher function.
+- `value` - [string]. Parsing string-like value.
+- `options`
+  - `fallback`- [string] - fallback value if incoming value is not matched by regex or matcher function.
+  - `throwOnUndefined`- [boolean] - Throw an error if incoming value is undefined, fallback value is not returned, since it returns an error.
+  - `regexp`- [RegExp] - Regexp for incoming value. Returns first match.
+  - `throwOnNullable` - [boolean] - Throw an error if incoming value is null, undefined, empty string or empty array.
+  - `matcher` - [boolean] - Matcher function for incoming value. Returns boolean(is matched incoming string or not).
+  - `throwOnMismatch` - [boolean] - Throw an error if incoming value is not matched by regex or matcher function.
+
+#### Returns
+
+`string`
 
 Example:
 
@@ -154,3 +210,23 @@ arrayGuard(process.env.token, {
     fallback: 'qwerty'
 }); // returns qwerty, since mismatch
 ```
+
+### define(fn)
+
+#### Parameters
+
+- `function` - [Function] - First argument should accepts type `string | undefined`, otherwise it throws an `TypeError`
+
+#### returns
+
+Function
+
+### revoke(fn)
+
+#### Parameters
+
+- `function` - [Function] - function reference from `define`. It will throw a `ReferenceError` in case of function is not created from `define`.
+
+#### Returns
+
+void

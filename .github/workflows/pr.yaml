@@ -27,5 +27,11 @@ jobs:
           version: 7.1.7
           run_install: |
             - args: []
-      - run: pnpm jest
       - run: pnpm build
+      - run: pnpm jest
+      - run: pnpm jest --coverage
+      - name: Report code coverage
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Coverage report for node.js version: ${{ matrix.node-version }}"

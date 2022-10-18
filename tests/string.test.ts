@@ -66,4 +66,13 @@ test('should throw an error if input variable is not matched by matcher function
 test('should throw an error if incoming variable is not a string or undefined', () => {
   // @ts-expect-error
   expect(() => stringGuard(null)).toThrowError(TypeError);
+  // @ts-expect-error
+  expect(() => stringGuard(null)).toThrowError(TypeError);
+});
+
+test('should throw an error if incoming variable is not matched and throwOnMismatched=true', () => {
+  expect(() => stringGuard('qwe', {
+    throwOnMismatch: true,
+    regexp: /asd/, // true statement
+  })).toThrowError(TypeError);
 });
