@@ -12,7 +12,7 @@ import { kRevoke } from './constants';
  * @param {Function} fn reference returned from `define`.
  */
 export default function revoke(fn: Function) {
-  const revokeFn: Function = (fn as any)[kRevoke];
+  const revokeFn = (fn as any)[kRevoke] as unknown;
   try {
     assertFunction(revokeFn);
   } catch (e) {

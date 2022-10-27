@@ -37,7 +37,18 @@ export type Options = {
    * false
    */
   throwOnFinite?: boolean;
-
+  /**
+   * Throws an error if incoming value is integer like, without decimal part
+   * @default
+   * false
+   */
+  throwOnInteger?: boolean;
+  /**
+   * Throws an error if incoming value is float like, with decimal part
+   * @default
+   * false
+   */
+  throwOnFloat?: boolean;
 };
 /**
  * Guard that parse environment variable and returns a number anyway
@@ -66,6 +77,12 @@ const numberGuard = define((variable: string | undefined, options?: Options) => 
   }
   if (options?.throwOnSafeInteger && !isSafe) {
     throw new RangeError(`numberGuard. ${variable} is not a safe integer`);
+  }
+  if (options?.throwOnInteger && Number.isInteger(floatValue)) {
+    throw new TypeError('numberGuard. variable is integer');
+  }
+  if (options?.throwOnFloat && !Number.isInteger(floatValue)) {
+    throw new TypeError('numberGuard. variable is floating');
   }
   if (isSafe && Number.isFinite(floatValue)) {
     return floatValue;

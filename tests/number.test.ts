@@ -47,16 +47,24 @@ test('should throws "TypeError" if "throwOnFinite:true" for Infinite-like string
   expect(() => numberGuard('Infinity', { fallback: 5, throwOnFinite: true })).toThrowError(TypeError);
 });
 
-test('should throws "TypeError" if "throwOnSafeInteger:true" for non a number string', () => {
+test('should throws "RangeError" if "throwOnSafeInteger:true" for non a number string', () => {
   expect(() => numberGuard('long string', { fallback: 5, throwOnSafeInteger: true })).toThrowError(RangeError);
 });
 
-test('should throws "TypeError" if "throwOnSafeInteger:true" for Infinity-like string', () => {
+test('should throws "RangeError" if "throwOnSafeInteger:true" for Infinity-like string', () => {
   expect(() => numberGuard('Infinity', { fallback: 5, throwOnSafeInteger: true })).toThrowError(RangeError);
 });
 
-test('should throws "TypeError" if "throwOnSafeInteger:true" for Number.MAX_SAFE_INTEGER+10 string', () => {
+test('should throws "RangeError" if "throwOnSafeInteger:true" for Number.MAX_SAFE_INTEGER+10 string', () => {
   expect(() => numberGuard(String(Number.MAX_SAFE_INTEGER) + '10', { fallback: 5, throwOnSafeInteger: true })).toThrowError(RangeError);
+});
+
+test('should throws "TypeError" if "throwOnInteger:true" for integer-like value', () => {
+  expect(() => numberGuard(String(12.0), { fallback: 5, throwOnInteger: true })).toThrowError(TypeError);
+});
+
+test('should throws "TypeError" if "throwOnFloat:true" for float-like value', () => {
+  expect(() => numberGuard(String(12.2), { fallback: 5, throwOnFloat: true })).toThrowError(TypeError);
 });
 
 test('should throw an error if incoming variable is not a string or undefined', () => {
