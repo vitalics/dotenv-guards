@@ -1,4 +1,5 @@
 import { assertString } from './assert';
+import define from './define';
 
 export type Options = {
   /**
@@ -45,11 +46,10 @@ export type Options = {
  *
  * @export
  * @param {(string | undefined)} variable variable to parse
- * @param {number} [fallback=0] fallback value if parsing was wrong
  * @param {Options} [options] parsing options
- * @return {*} 
+ * @return {*} number
  */
-export default function numberGuard(variable: string | undefined, options?: Options) {
+const numberGuard = define((variable: string | undefined, options?: Options) => {
   assertString(variable, { strict: options?.throwOnUndefined, error: new TypeError('numberGuard. variable is undefined') });
   const fallback = options?.fallback ?? 0;
   if (variable === undefined) {
@@ -71,4 +71,6 @@ export default function numberGuard(variable: string | undefined, options?: Opti
     return floatValue;
   }
   return fallback;
-}
+});
+
+export default numberGuard;

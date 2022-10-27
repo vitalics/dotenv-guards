@@ -1,4 +1,5 @@
 import { assertString } from './assert';
+import define from './define';
 
 /**
  * Guard that parse environment variable and returns a first including of provided `values`.
@@ -17,11 +18,13 @@ import { assertString } from './assert';
  * enumGuard('5', ['1', '2']); // Unable process 5 from list: [1,2]
  * enumGuard('5', ['1', '2'], null); // null, fallback value is null
  */
-export default function enumGuard<S extends string>(variable: string | undefined, values: readonly S[], fallbackValue?: string | null): typeof fallbackValue extends null ? S | null : S {
+const enumGuard = define(<S extends string>(variable: string | undefined, values: readonly S[], fallbackValue?: string | null): typeof fallbackValue extends null ? S | null : S => {
   assertString(variable);
   const result = values.find(v => v === variable);
   if (!result && !fallbackValue && fallbackValue !== null) {
     throw new RangeError(`Unable process ${variable} from list: ${values}`);
   }
   return (result || fallbackValue) as S;
-}
+});
+
+export default enumGuard;

@@ -1,4 +1,5 @@
 import { assertFunction, assertString } from './assert';
+import define from './define';
 
 export type Options = {
   /**
@@ -47,7 +48,7 @@ export type Options = {
  * @param {Options} [options] parsing options
  * @return {*} Guarded value or `TypeError`
  */
-export default function stringGuard(variable: string | undefined, options?: Options) {
+const stringGuard = define((variable: string | undefined, options?: Options) => {
   assertString(variable, { strict: options?.throwOnUndefined, error: new TypeError('stringGuard. variable is undefined') });
   const fallbackValue = options?.fallback ?? variable ?? '';
   if ((variable === undefined || variable === null || variable === 'null' || variable === 'undefined' || variable === '') && options?.throwOnNullable) {
@@ -72,4 +73,6 @@ export default function stringGuard(variable: string | undefined, options?: Opti
     }
   }
   return fallbackValue;
-}
+});
+
+export default stringGuard;

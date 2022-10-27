@@ -1,5 +1,6 @@
 import { assertString } from './assert';
 import enumGuard from './enum';
+import define from './define';
 
 export type Options = {
   /**
@@ -32,7 +33,7 @@ export type Options = {
  * @example
  * arrayGuard('1,2,3', ['1', '2', '3'], {separator: ','}); // [1,2,3]
  */
-export default function arrayGuard<S extends string, O extends Options = Options>(variable: string | undefined, values: readonly S[] | S[], options?: O): O['strict'] extends true ? S[] : (S | null)[] {
+const arrayGuard = define(<S extends string, O extends Options = Options>(variable: string | undefined, values: readonly S[] | S[], options?: O): O['strict'] extends true ? S[] : (S | null)[] => {
   assertString(variable, { strict: options?.strict, error: new TypeError(`ArrayGuard. Incoming variable is undefined`) });
   const separator = options?.separator || ',';
 
@@ -42,4 +43,6 @@ export default function arrayGuard<S extends string, O extends Options = Options
   } else {
     return result.map(res => enumGuard(res, values, null));
   }
-}
+});
+
+export default arrayGuard;

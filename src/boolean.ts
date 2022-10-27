@@ -43,7 +43,7 @@ export type Options = {
  * booleanGuard('long string', true); //true
  * booleanGuard('yes', false, {trueSymbols: ['yes']}); //true
  */
-export default function booleanGuard(variable: string | undefined, options?: Options): boolean {
+const booleanGuard = define((variable: string | undefined, options?: Options): boolean  => {
   assertString(variable, { strict: options?.throwOnUndefined, error: new TypeError('booleanGuard. variable is undefined') });
   const defaultTrueSymbols = ['1', 'true'] as const;
   const fallback = options?.fallback ?? false;
@@ -59,4 +59,6 @@ export default function booleanGuard(variable: string | undefined, options?: Opt
     throw new TypeError(`booleanGuard. variable is not matched with ${trueSymbols}`);
   }
   return fallback;
-}
+});
+
+export default booleanGuard;
