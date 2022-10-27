@@ -70,7 +70,7 @@ numberGuard(value, fallbackValue, options)
 
 #### Returns
 
-`string`
+`number`
 
 Example:
 
@@ -102,7 +102,7 @@ booleanGuard(value, options)
 
 #### Returns
 
-`string`
+`boolean`
 
 Example:
 
